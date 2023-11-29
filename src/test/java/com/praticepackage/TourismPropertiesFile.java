@@ -1,0 +1,47 @@
+package com.praticepackage;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.Duration;
+import java.util.Properties;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class TourismPropertiesFile {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+//create object for properties class
+		Properties pobj=new Properties();
+		pobj.setProperty("browser","chrome");
+		pobj.setProperty("url","http://rmgtestingserver/domain/Online_Tourism_Management_System/index.php");
+		pobj.setProperty("email","dverma7612@gmail.com");
+		pobj.setProperty("password","6666");
+		
+		//create object for fileoutputstream
+		FileOutputStream fout=new FileOutputStream("C:\\Users\\91891\\eclipse-workspace\\com.otm.Yatrisuvidha\\src\\test\\resources\\tour.properties");
+		pobj.store(fout,"write data");
+		FileInputStream fis=new FileInputStream("C:\\Users\\91891\\eclipse-workspace\\com.otm.Yatrisuvidha\\src\\test\\resources\\tour.properties");
+		pobj.load(fis);
+		String BROWSER=pobj.getProperty("browser");
+		String URL=pobj.getProperty("url");
+		String EMAIL=pobj.getProperty("email");
+		String PASSWORD=pobj.getProperty("password");
+		WebDriver driver=new ChromeDriver();
+		driver.get(URL);
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+		
+		driver.findElement(By.xpath("//a[.='/ Sign In']")).click();
+		driver.findElement(By.xpath("//input[@id='email'  and @placeholder='Enter your Email']")).sendKeys(EMAIL);
+		driver.findElement(By.xpath("//input[@id='password' and @placeholder='Password']")).sendKeys(PASSWORD);
+		driver.findElement(By.xpath("//input[@value='SIGNIN' and @ name='signin']")).click();
+		
+		
+	}
+
+}
